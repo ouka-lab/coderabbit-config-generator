@@ -2,7 +2,7 @@
     "name": "coderabbit-config-generator-vscode",
     "displayName": "CodeRabbit Config Generator",
     "description": "Build a .coderabbit.yaml through a form and write it straight into your workspace.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "Kanon",
     "engines": {
         "vscode": "^1.90.0"

@@ -1,8 +1,8 @@
-[![GitHub last commit](https://img.shields.io/github/last-commit/ouka-lab/eslint-plugin-hono)](https://github.com/ouka-lab/coderabbit-config-generator/commits/master)
-[![Lint](https://github.com/ouka-lab/eslint-plugin-hono/actions/workflows/lint.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/lint.yml)
-[![Test](https://github.com/ouka-lab/eslint-plugin-hono/actions/workflows/test.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/test.yml)
-[![e2e](https://github.com/ouka-lab/eslint-plugin-hono/actions/workflows/test.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/e2e.yml)
-[![License: MIT](https://img.shields.io/npm/l/eslint-plugin-hono.svg)](https://github.com/ouka-lab/coderabbit-config-generator/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ouka-lab/coderabbit-config-generator)](https://github.com/ouka-lab/coderabbit-config-generator/commits/master)
+[![Lint](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/lint.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/lint.yml)
+[![Test](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/test.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/test.yml)
+[![e2e](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/test.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/e2e.yml)
+[![License: MIT](https://img.shields.io/npm/l/coderabbit-config-generator.svg)](https://github.com/ouka-lab/coderabbit-config-generator/blob/master/LICENSE)
 
 <img width="1200" height="630" alt="image" src="https://github.com/user-attachments/assets/6171d9b8-fef4-4abc-b160-5c9f254632e2" />
 
