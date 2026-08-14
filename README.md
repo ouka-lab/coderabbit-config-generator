@@ -4,6 +4,8 @@
 [![e2e](https://github.com/ouka-lab/eslint-plugin-hono/actions/workflows/test.yml/badge.svg)](https://github.com/ouka-lab/coderabbit-config-generator/actions/workflows/e2e.yml)
 [![License: MIT](https://img.shields.io/npm/l/eslint-plugin-hono.svg)](https://github.com/ouka-lab/coderabbit-config-generator/blob/master/LICENSE)
 
+<img width="1200" height="630" alt="image" src="https://github.com/user-attachments/assets/6171d9b8-fef4-4abc-b160-5c9f254632e2" />
+
 # CodeRabbit Config Generator
 
 A web app that generates [CodeRabbit](https://coderabbit.ai/)'s `.coderabbit.yaml` configuration file through a GUI. Fill in the form and the YAML is live-previewed in the right pane, ready to download.
