@@ -1,16 +1,36 @@
 {
-    "name": "@coderabbit-config/vscode",
+    "name": "coderabbit-config-generator-vscode",
     "displayName": "CodeRabbit Config Generator",
     "description": "Build a .coderabbit.yaml through a form and write it straight into your workspace.",
-    "private": true,
-    "version": "1.1.0",
-    "publisher": "ysknsid25",
+    "version": "1.0.0",
+    "publisher": "Kanon",
     "engines": {
         "vscode": "^1.90.0"
     },
     "categories": [
+        "Linters",
         "Other"
     ],
+    "keywords": [
+        "coderabbit",
+        "code review",
+        "yaml",
+        "configuration"
+    ],
+    "icon": "assets/icon.png",
+    "galleryBanner": {
+        "color": "#ff570a",
+        "theme": "dark"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ouka-lab/coderabbit-config-generator.git",
+        "directory": "packages/vscode"
+    },
+    "homepage": "https://github.com/ouka-lab/coderabbit-config-generator#readme",
+    "bugs": {
+        "url": "https://github.com/ouka-lab/coderabbit-config-generator/issues"
+    },
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
@@ -25,7 +45,9 @@
         "build:webview": "vite build",
         "build:extension": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node20",
         "build": "pnpm build:webview && pnpm build:extension",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "package": "npx @vscode/vsce package --no-dependencies",
+        "package:ls": "npx @vscode/vsce ls --no-dependencies"
     },
     "dependencies": {
         "@coderabbit-config/ui": "workspace:*",
