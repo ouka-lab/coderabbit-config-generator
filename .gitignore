@@ -17,3 +17,5 @@ playwright-report
 blob-report
 playwright/.cache
 *.tsbuildinfo
+packages/vscode/dist
+*.vsix

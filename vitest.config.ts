@@ -18,6 +18,10 @@ export default defineConfig({
         'packages/core/src/index.ts',
         'packages/ui/src/index.ts',
         'packages/web/src/main.tsx',
+        'packages/vscode/webview/main.tsx',
+        // Extension-host code only runs inside VS Code; it needs the
+        // integration test runner rather than jsdom.
+        'packages/vscode/src/**',
         'packages/web/src/vite-env.d.ts',
         '**/*.config.{ts,mjs}',
       ],

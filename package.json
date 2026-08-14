@@ -8,6 +8,7 @@
         "generate:examples": "pnpm --filter @coderabbit-config/core generate:examples",
         "dev": "pnpm generate:examples && pnpm --filter @coderabbit-config/web dev",
         "build": "pnpm typecheck && pnpm --filter @coderabbit-config/web build",
+        "build:vscode": "pnpm typecheck && pnpm --filter @coderabbit-config/vscode build",
         "preview": "pnpm --filter @coderabbit-config/web preview",
         "typecheck": "pnpm generate:examples && pnpm -r typecheck",
         "test": "pnpm generate:examples && vitest run",

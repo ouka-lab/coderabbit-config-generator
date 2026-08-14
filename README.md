@@ -10,6 +10,7 @@ Every field, label, validation rule, and default value is **derived at runtime**
 - **Recursive generic renderer** — Renders objects, arrays, and nesting as a tree, handling two-level nested arrays and free-form records naturally.
 - **Minimal YAML output** — Deeply compares input against the schema's `default` values and strips keys equal to defaults along with empty arrays/objects, emitting a clean YAML of only what matters (a "include defaults" toggle switches to full output).
 - **Live preview** — Updates the YAML instantly as you type, with copy / download / reset.
+- **Runs in VS Code too** — The same form ships as a VS Code extension that writes `.coderabbit.yaml` straight into your workspace. See [`packages/vscode`](packages/vscode/README.md).
 
 ## Tech Stack
 
@@ -46,6 +47,7 @@ Open the URL Vite prints (default `http://localhost:5173`).
 |---|---|
 | `pnpm dev` | Start the dev server |
 | `pnpm build` | Type-check every package + production build (`packages/web/dist/`) |
+| `pnpm build:vscode` | Type-check + build the VS Code extension (`packages/vscode/dist/`) |
 | `pnpm preview` | Preview the build locally |
 | `pnpm typecheck` | Type-check only |
 | `pnpm test` | Run tests |
@@ -99,7 +101,7 @@ schema.v2.json (single source of truth)
 
 ## Project Structure
 
-A pnpm workspace split by host dependency, so the UI can be reused outside the browser (a VS Code webview is the next target).
+A pnpm workspace split by host dependency, so the same UI runs in the browser and in a VS Code webview.
 
 ```
 packages/
@@ -123,11 +125,15 @@ packages/
       YamlPreview.tsx        # right-pane live preview
       InfoTip.tsx            # description tooltip
     src/platform/            # PlatformAdapter contract (see below)
+    src/theme.css            # design tokens shared by every host
     src/App.tsx
   web/                       # the browser host
     src/main.tsx             # mounts <Root> behind a PlatformProvider
     src/platform/web.ts      # PlatformAdapter: clipboard + ZIP download
     e2e/                     # Playwright specs
+  vscode/                    # the VS Code host (see packages/vscode/README.md)
+    src/                     # extension host: command, panel, workspace writes
+    webview/platform.ts      # PlatformAdapter: postMessage to the host
 ```
 
 ### PlatformAdapter
@@ -145,9 +151,13 @@ interface PlatformAdapter {
 }
 ```
 
-The web host downloads a ZIP (browsers refuse to save a leading-dot filename)
-and owns its own theme toggle. An editor host would instead write
-`.coderabbit.yaml` straight into the workspace and follow the editor's theme.
+| | `save` | `canToggleTheme` |
+|---|---|---|
+| Web | Downloads a ZIP — browsers refuse to save a leading-dot filename | `true` |
+| VS Code | Posts to the extension host, which writes `.coderabbit.yaml` into the workspace | `false` — the editor owns the theme |
+
+Adding a host means writing one adapter and an entry point. Nothing in
+`packages/ui` changes.
 
 ## Testing
 
