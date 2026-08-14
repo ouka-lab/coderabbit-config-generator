@@ -2,7 +2,8 @@ import { useState, useSyncExternalStore } from 'react';
 import type { ChangeSignal } from '../form/useChangeSignal';
 import type { AnyForm } from '../form/formisch';
 import { buildConfig } from '../output/buildConfig';
-import { downloadYaml, toYaml, withSchemaModeline } from '../output/toYaml';
+import { toYaml, withSchemaModeline } from '../output/toYaml';
+import { usePlatform } from '../platform/context';
 import { InfoTip } from './InfoTip';
 
 interface Props {
@@ -15,6 +16,7 @@ const REDHAT_YAML_EXTENSION
 
 export function YamlPreview({ form, signal }: Props) {
   useSyncExternalStore(signal.subscribe, signal.getSnapshot);
+  const platform = usePlatform();
   const [includeDefaults, setIncludeDefaults] = useState(false);
   const [schemaModeline, setSchemaModeline] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -25,7 +27,7 @@ export function YamlPreview({ form, signal }: Props) {
   const showPlaceholder = body.trim() === '' && !schemaModeline;
 
   const copy = async () => {
-    await navigator.clipboard.writeText(output);
+    await platform.copy(output);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   };
@@ -47,12 +49,12 @@ export function YamlPreview({ form, signal }: Props) {
           </button>
           <button
             type="button"
-            onClick={() => downloadYaml(output)}
+            onClick={() => platform.save(output)}
             disabled={isEmpty}
-            title="Downloads coderabbit-config.zip containing .coderabbit.yaml — browsers cannot save dotfiles directly"
+            title={platform.saveTitle}
             className="rounded-md bg-brand-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-brand-700 disabled:opacity-50"
           >
-            Download
+            {platform.saveLabel}
           </button>
         </div>
       </div>

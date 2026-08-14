@@ -1,11 +1,13 @@
 import { useForm } from '@formisch/react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { AnyForm } from '../form/formisch';
 import type { ChangeSignal } from '../form/useChangeSignal';
+import type { PlatformAdapter } from '../platform/types';
 import { buildRootSchema } from '../schema/jsonSchemaToValibot';
 import type { JSONSchema } from '../schema/types';
+import { createTestPlatform, withPlatform } from '../test/platform';
 import { YamlPreview } from './YamlPreview';
 
 const schema = buildRootSchema({
@@ -22,12 +24,12 @@ const signal: ChangeSignal = {
   getSnapshot: () => 0,
 };
 
-function renderPreview() {
+function renderPreview(platform?: PlatformAdapter) {
   function Harness() {
     const form = useForm({ schema }) as AnyForm;
     return <YamlPreview form={form} signal={signal} />;
   }
-  return render(<Harness />);
+  return render(<Harness />, { wrapper: withPlatform(platform) });
 }
 
 describe('YamlPreview', () => {
@@ -53,6 +55,27 @@ describe('YamlPreview', () => {
       screen.getByRole('checkbox', { name: /Include default values/ }),
     );
     expect(screen.getByText(/language: en-US/)).toBeInTheDocument();
+  });
+
+  it('delegates copy and save to the platform', async () => {
+    const user = userEvent.setup();
+    const copy = vi.fn().mockResolvedValue(undefined);
+    const save = vi.fn().mockResolvedValue(undefined);
+    renderPreview(createTestPlatform({ copy, save }));
+
+    await user.click(screen.getByRole('button', { name: 'Copy' }));
+    await user.click(screen.getByRole('button', { name: 'Download' }));
+
+    const expected = expect.stringContaining('yaml-language-server');
+    expect(copy).toHaveBeenCalledWith(expected);
+    expect(save).toHaveBeenCalledWith(expected);
+  });
+
+  it('labels the save button the way the platform asks', () => {
+    renderPreview(createTestPlatform({ saveLabel: 'Save to workspace' }));
+    expect(
+      screen.getByRole('button', { name: 'Save to workspace' }),
+    ).toBeInTheDocument();
   });
 
   it('exposes the extension link inside the tip', async () => {

@@ -5,6 +5,7 @@ import { FieldRenderer } from './form/FieldRenderer';
 import type { AnyForm } from './form/formisch';
 import { useChangeSignal } from './form/useChangeSignal';
 import { useConfigForm } from './form/useConfigForm';
+import { usePlatform } from './platform/context';
 import { rootMeta } from './schema';
 import { GithubIcon, HeartIcon } from './ui/icons';
 import { ThemeToggle } from './ui/ThemeToggle';
@@ -22,6 +23,7 @@ interface AppProps {
 
 export function App({ initialInput, onImportClick }: AppProps) {
   const form = useConfigForm() as AnyForm;
+  const platform = usePlatform();
   const signal = useChangeSignal();
   const scalars = rootMeta.filter(m => m.kind !== 'group');
   const groups = rootMeta.filter(m => m.kind === 'group');
@@ -48,7 +50,7 @@ export function App({ initialInput, onImportClick }: AppProps) {
             CodeRabbit Config Generator
           </h1>
           <div className="ml-auto flex items-center gap-4">
-            <ThemeToggle />
+            {platform.canToggleTheme && <ThemeToggle />}
             <a
               href={REPO_URL}
               target="_blank"

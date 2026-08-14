@@ -2,10 +2,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { App } from './App';
+import { withPlatform } from './test/platform';
 
 describe('App', () => {
   it('renders the header and top-level sections from the schema', () => {
-    render(<App onImportClick={() => {}} />);
+    render(<App onImportClick={() => {}} />, { wrapper: withPlatform() });
     expect(
       screen.getByText('CodeRabbit Config Generator'),
     ).toBeInTheDocument();
@@ -15,7 +16,7 @@ describe('App', () => {
   });
 
   it('links to the repository and sponsor pages', () => {
-    render(<App onImportClick={() => {}} />);
+    render(<App onImportClick={() => {}} />, { wrapper: withPlatform() });
     expect(
       screen.getByRole('link', { name: 'GitHub repository' }),
     ).toHaveAttribute(
@@ -28,14 +29,14 @@ describe('App', () => {
   });
 
   it('shows a copyright notice', () => {
-    render(<App onImportClick={() => {}} />);
+    render(<App onImportClick={() => {}} />, { wrapper: withPlatform() });
     expect(screen.getByText(/©\s*2026/)).toBeInTheDocument();
   });
 
   it('calls onImportClick when the Import Configure button is clicked', async () => {
     const user = userEvent.setup();
     const onImportClick = vi.fn();
-    render(<App onImportClick={onImportClick} />);
+    render(<App onImportClick={onImportClick} />, { wrapper: withPlatform() });
     await user.click(screen.getByRole('button', { name: 'Import Configure' }));
     expect(onImportClick).toHaveBeenCalledTimes(1);
   });
