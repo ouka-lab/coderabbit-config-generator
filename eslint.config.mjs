@@ -23,6 +23,16 @@ export default [
     jsx: true,
   }),
   {
-    ignores: ['dist', 'coverage', '.git', 'node_modules', 'docs', 'vendor', 'src/examples/generated'],
+    ignores: [
+      '**/dist',
+      '**/coverage',
+      '.git',
+      '**/node_modules',
+      'docs',
+      'vendor',
+      '**/playwright-report',
+      '**/test-results',
+      'packages/core/src/examples/generated',
+    ],
   },
 ];

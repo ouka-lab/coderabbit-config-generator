@@ -1,0 +1,36 @@
+{
+    "name": "@coderabbit-config/ui",
+    "private": true,
+    "version": "1.1.0",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@coderabbit-config/core": "workspace:*"
+    },
+    "peerDependencies": {
+        "@formisch/react": "^1.0.0-rc.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "valibot": "^1.4.2"
+    },
+    "devDependencies": {
+        "@formisch/react": "^1.0.0-rc.0",
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
+        "@testing-library/user-event": "^14.6.1",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "@vitejs/plugin-react": "^5.0.0",
+        "jsdom": "^29.1.1",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "typescript": "^5.7.0",
+        "valibot": "^1.4.2",
+        "vitest": "^4.1.10"
+    }
+}

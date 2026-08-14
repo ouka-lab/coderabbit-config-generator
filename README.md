@@ -25,18 +25,18 @@ Every field, label, validation rule, and default value is **derived at runtime**
 
 ## Getting Started
 
-Requires **Node.js 22.x**. This repo vendors [`awesome-coderabbit`](https://github.com/coderabbitai/awesome-coderabbit) as a git submodule to power the "official examples" picker on the Import page, so clone with `--recurse-submodules`.
+Requires **Node.js 22.x** and **pnpm 11.x** (both pinned via Volta and `packageManager`). This repo vendors [`awesome-coderabbit`](https://github.com/coderabbitai/awesome-coderabbit) as a git submodule to power the "official examples" picker on the Import page, so clone with `--recurse-submodules`.
 
 ```bash
 git clone --recurse-submodules <repo-url>
 cd coderabbit-config-generator
-npm ci        # install dependencies
-npm run dev   # start the dev server (Vite)
+pnpm install   # install dependencies
+pnpm dev       # start the dev server (Vite)
 ```
 
-Already cloned without submodules? Run `git submodule update --init --recursive` before `npm ci`.
+Already cloned without submodules? Run `git submodule update --init --recursive` before `pnpm install`.
 
-`npm run dev` and `npm run build` automatically regenerate `src/examples/generated/` from the submodule before starting, so the example list always reflects the checked-out submodule commit. See [CONTRIBUTING.md](CONTRIBUTING.md) for more on the development workflow.
+`pnpm dev` and `pnpm build` automatically regenerate `packages/core/src/examples/generated/` from the submodule before starting, so the example list always reflects the checked-out submodule commit. See [CONTRIBUTING.md](CONTRIBUTING.md) for more on the development workflow.
 
 Open the URL Vite prints (default `http://localhost:5173`).
 
@@ -44,21 +44,22 @@ Open the URL Vite prints (default `http://localhost:5173`).
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start the dev server |
-| `npm run build` | Type-check (`tsc -b`) + production build (`dist/`) |
-| `npm run preview` | Preview the build locally |
-| `npm run typecheck` | Type-check only |
-| `npm test` | Run tests |
-| `npm run test:coverage` | Run tests with coverage |
-| `npm run lint` | ESLint |
-| `npm run lint:fix` | ESLint with auto-fix |
-| `npm run generate:examples` | Regenerate `src/examples/generated/` from the `awesome-coderabbit` submodule |
+| `pnpm dev` | Start the dev server |
+| `pnpm build` | Type-check every package + production build (`packages/web/dist/`) |
+| `pnpm preview` | Preview the build locally |
+| `pnpm typecheck` | Type-check only |
+| `pnpm test` | Run tests |
+| `pnpm test:coverage` | Run tests with coverage |
+| `pnpm test:e2e` | Run Playwright end-to-end tests |
+| `pnpm lint` | ESLint |
+| `pnpm lint:fix` | ESLint with auto-fix |
+| `pnpm generate:examples` | Regenerate `packages/core/src/examples/generated/` from the `awesome-coderabbit` submodule |
 
 ## Architecture
 
 ```
 schema.v2.json (single source of truth)
-      │  adapter layer (src/schema/)
+      │  adapter layer (packages/core/src/schema/)
  ┌────────────────────────────┬─────────────────────────────┐
  │ jsonSchemaToValibot(node)  │ toFieldMeta(node, path)     │
  │  builds Valibot            │  computes label/desc/enum/  │
@@ -98,34 +99,63 @@ schema.v2.json (single source of truth)
 
 ## Project Structure
 
+A pnpm workspace split by host dependency, so the UI can be reused outside the browser (a VS Code webview is the next target).
+
 ```
-src/
-  schema/                    # schema → internal representation adapters
-    schema.v2.json           #   vendored official schema (source of truth)
-    jsonSchemaToValibot.ts   #   JSON Schema → Valibot (recursive, memoized)
-    toFieldMeta.ts           #   JSON Schema node → render metadata
-    index.ts                 #   exposes configSchema / rootMeta
-    types.ts                 #   FieldMeta types, etc.
-  form/
-    useConfigForm.ts         # useForm wrapper (builds the root schema)
-    FieldRenderer.tsx        # recursive renderer (dispatches on meta.kind)
-    fields/                  # widgets (Boolean/Enum/Text/Number/…)
-  output/
-    buildConfig.ts           # strip-defaults (computes minimal config)
-    toYaml.ts                # YAML serialization + download
-  ui/
-    YamlPreview.tsx          # right-pane live preview
-    InfoTip.tsx              # description tooltip
-  App.tsx
+packages/
+  core/                      # no React, no DOM
+    src/schema/
+      schema.v2.json         #   vendored official schema (source of truth)
+      jsonSchemaToValibot.ts #   JSON Schema → Valibot (recursive, memoized)
+      toFieldMeta.ts         #   JSON Schema node → render metadata
+      index.ts               #   exposes configSchema / rootMeta
+      types.ts               #   FieldMeta types, etc.
+    src/output/toYaml.ts     # YAML serialization
+    src/import/              # YAML → validated config (paste / example import)
+    src/examples/            # official example fixtures (generated)
+  ui/                        # React, host-agnostic
+    src/form/
+      useConfigForm.ts       # useForm wrapper (builds the root schema)
+      FieldRenderer.tsx      # recursive renderer (dispatches on meta.kind)
+      fields/                # widgets (Boolean/Enum/Text/Number/…)
+    src/output/buildConfig.ts# strip-defaults (computes minimal config)
+    src/ui/
+      YamlPreview.tsx        # right-pane live preview
+      InfoTip.tsx            # description tooltip
+    src/platform/            # PlatformAdapter contract (see below)
+    src/App.tsx
+  web/                       # the browser host
+    src/main.tsx             # mounts <Root> behind a PlatformProvider
+    src/platform/web.ts      # PlatformAdapter: clipboard + ZIP download
+    e2e/                     # Playwright specs
 ```
+
+### PlatformAdapter
+
+`packages/ui` never touches browser or editor APIs. Anything host-specific goes
+through a small interface the host supplies:
+
+```ts
+interface PlatformAdapter {
+  save: (text: string) => Promise<void>;
+  copy: (text: string) => Promise<void>;
+  saveLabel: string;
+  saveTitle?: string;
+  canToggleTheme: boolean;
+}
+```
+
+The web host downloads a ZIP (browsers refuse to save a leading-dot filename)
+and owns its own theme toggle. An editor host would instead write
+`.coderabbit.yaml` straight into the workspace and follow the editor's theme.
 
 ## Testing
 
 Unit and component tests use Vitest (jsdom) + Testing Library, covering the field components, schema conversion, and YAML output.
 
 ```bash
-npm test                # run
-npm run test:coverage   # with coverage
+pnpm test                # run
+pnpm test:coverage       # with coverage
 ```
 
 CI (GitHub Actions) runs lint, test, and build.

@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+
+# esbuild links its platform binary from a postinstall script; Vite and Vitest
+# do not work without it.
+allowBuilds:
+  esbuild: true

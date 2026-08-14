@@ -11,8 +11,9 @@ docs
 .firebaserc
 firebase.json
 .firebase
-src/examples/generated
+packages/core/src/examples/generated
 test-results
 playwright-report
 blob-report
 playwright/.cache
+*.tsbuildinfo
