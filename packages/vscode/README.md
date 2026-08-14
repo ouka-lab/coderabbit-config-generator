@@ -18,4 +18,5 @@ if you are favorite this app, please [sponsor](https://github.com/sponsors/yskns
 - You can create a `.coderabbit.yaml` file while checking the configuration items and their details in a GUI.
 - You can customize it based on officially recommended samples for each language and framework.
 
-https://github.com/user-attachments/assets/e5345b21-d4f4-4348-b559-391d2221d0ca
+<img width="1442" height="854" alt="Monosnap screencast 2026-08-15 00-01-48" src="https://github.com/user-attachments/assets/dfc4c0df-c823-4700-b817-090920f06846" />
+
