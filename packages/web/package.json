@@ -19,15 +19,15 @@
         "valibot": "^1.4.2"
     },
     "devDependencies": {
-        "@playwright/test": "1.61.1",
+        "@playwright/test": "1.62.1",
         "@tailwindcss/vite": "^4.3.2",
         "@types/node": "^26.1.1",
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
-        "@vitejs/plugin-react": "^5.0.0",
-        "jsdom": "^29.1.1",
+        "@vitejs/plugin-react": "^6.0.5",
+        "jsdom": "^30.0.1",
         "tailwindcss": "^4.3.2",
-        "typescript": "^5.7.0",
+        "typescript": "^7.0.2",
         "vite": "^8.1.4",
         "vitest": "^4.1.10"
     }
