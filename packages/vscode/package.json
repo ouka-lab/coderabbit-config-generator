@@ -62,11 +62,11 @@
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
         "@types/vscode": "^1.90.0",
-        "@vitejs/plugin-react": "^5.0.0",
+        "@vitejs/plugin-react": "^6.0.5",
         "esbuild": "^0.28.2",
-        "jsdom": "^29.1.1",
+        "jsdom": "^30.0.1",
         "tailwindcss": "^4.3.2",
-        "typescript": "^5.7.0",
+        "typescript": "^7.0.2",
         "vite": "^8.1.4",
         "vitest": "^4.1.10"
     }
