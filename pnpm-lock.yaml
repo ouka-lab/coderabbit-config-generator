@@ -68,8 +68,8 @@ importers:
         version: link:../core
     devDependencies:
       '@formisch/react':
-        specifier: ^1.0.0-rc.0
-        version: 1.0.0-rc.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
+        specifier: ^1.0.0
+        version: 1.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
       '@testing-library/jest-dom':
         specifier: ^6.9.1
         version: 6.10.0(@testing-library/dom@10.4.1)
@@ -113,8 +113,8 @@ importers:
         specifier: workspace:*
         version: link:../ui
       '@formisch/react':
-        specifier: ^1.0.0-rc.0
-        version: 1.0.0-rc.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
+        specifier: ^1.0.0
+        version: 1.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
       react:
         specifier: ^19.0.0
         version: 19.2.8
@@ -171,8 +171,8 @@ importers:
         specifier: workspace:*
         version: link:../ui
       '@formisch/react':
-        specifier: ^1.0.0-rc.0
-        version: 1.0.0-rc.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
+        specifier: ^1.0.0
+        version: 1.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))
       react:
         specifier: ^19.0.0
         version: 19.2.8
@@ -571,13 +571,13 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@formisch/react@1.0.0-rc.0':
-    resolution: {integrity: sha512-KLYvwpg1MGubT3JutG/3S+iy7zktkDoLmI1Gl991ZKkKMTttyZBJC+gQet5UwOLTB7XDiuxQ3AaTQqs1o34a4w==}
+  '@formisch/react@1.0.0':
+    resolution: {integrity: sha512-3lHzk6orMgzvbgfEWZ4G/rTQie5/LB8/ffPIUjM1jQ0vnqZCeDfi2c70toa6DM6bDVN5BrYc7sAu+Ekb2t92vg==}
     peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      typescript: '>=5'
-      valibot: ^1.4.1
+      react: '>=16.8.0 <20'
+      react-dom: '>=16.8.0 <20'
+      typescript: '>=5 <8'
+      valibot: '>=1.4.1 <2'
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -1197,6 +1197,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2286,7 +2287,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@formisch/react@1.0.0-rc.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))':
+  '@formisch/react@1.0.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)(valibot@1.4.2(typescript@5.9.3))':
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
